@@ -15,6 +15,7 @@
 				:defmacro-overload
 				:declare-constructor
 				:define-constructor
+				:define-constructor-macro
 				:dynamic-new
 				:new
 				#|--------------------------|#))
@@ -616,6 +617,33 @@ See Also:
 "
 		(let ((arg-info (paramlst-to-arginfo params)))
 		  `(defmethod ,(make-ctor-fncname name arg-info) ,params
+			 ,@body)))
+
+	  ;;------------------------------------------------------------------------------
+	  ;; macro define-constructor-macro
+	  #|
+	  #|EXPORT|#				:define-constructor-macro
+	  |#
+	  ;;------------------------------------------------------------------------------
+	  (defmacro define-constructor-macro (name (&rest params) &body body)
+		"    
+Syntax:
+  (define-constructor-macro name (&rest params) &body body)
+
+Arguments and Values:
+  name   : a symbol. (constructor name)
+  params : sequence of parameter symbols.
+  body   : constructor macro body.
+
+Description:
+    Define compiler-macro for overloading constructor.
+  ToDo : not yet described.
+
+See Also:
+  define-constructor
+"
+		(let ((arg-info (paramlst-to-arginfo params)))
+		  `(define-compiler-macro ,(make-ctor-fncname name arg-info) ,params
 			 ,@body)))
 
 	  ;;------------------------------------------------------------------------------
